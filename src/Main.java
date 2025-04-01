@@ -2,6 +2,8 @@ import decorator.BasePizza;
 import decorator.extra.ExtraCheese;
 import decorator.extra.ExtraMushroom;
 import decorator.pizza.FarmHouse;
+import factory.VeyronFactory;
+import factory.veyron.Veyron;
 import observer.observable.IphoneObservableImpl;
 import observer.observable.StockObservable;
 import observer.observer.EmailAlertObserver;
@@ -19,6 +21,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
 
+        // Liskov
+
 /*        List<VehcileLiskov>list = new ArrayList<>();
 
         list.add(new Car());
@@ -32,7 +36,11 @@ public class Main {
 
        // }
 
+
+
+
         // stratergy
+
 
 /*        VehcileStratergy normalVehcile = new VehcileStratergy(new NormalDriveStratergy());
         normalVehcile.drive();
@@ -54,10 +62,14 @@ public class Main {
         VehcileStratergy offRoadVehcile = new OffRoadVehcile(new OffRoadDriveStratergy());
         offRoadVehcile.drive();*/
 
+
+
+
+
+
         // Observer
 
 /*        StockObservable iphoneObservable = new IphoneObservableImpl();
-
 
 
         // only for alert and send mail
@@ -74,7 +86,9 @@ public class Main {
 
 
           // Decorator
-        // I want to decorate the topping for FarmHouse
+
+
+/*        // I want to decorate the topping for FarmHouse
         ExtraCheese extraCheeseFarmHousePizza = new ExtraCheese(new FarmHouse());
 
         int cost = extraCheeseFarmHousePizza.cost();
@@ -84,7 +98,18 @@ public class Main {
         System.out.println(extraMushroomPizza.cost());
 
         // ExtraMushroom has BasePizza as an argument, but can take ExtraCheese as a constructor argument because ExtraCheese extends ToppingDecorator and
-        // ToppingDecorator extends basePizza (so it works)
+        // ToppingDecorator extends basePizza (so it works)*/
+
+
+
+        // factory and abstract factory
+
+        VeyronFactory factory = new VeyronFactory();
+        Veyron veyron = factory.getModel("MID");
+        System.out.println("veyron price is " + veyron.getPrice());
+
+        Veyron veyron1 = factory.getModel("HIGH");
+        System.out.println("veyron price is " + veyron1.getPrice());
 
 
 
