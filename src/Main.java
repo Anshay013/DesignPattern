@@ -1,21 +1,11 @@
-import decorator.BasePizza;
-import decorator.extra.ExtraCheese;
-import decorator.extra.ExtraMushroom;
-import decorator.pizza.FarmHouse;
-import factory.VeyronFactory;
-import factory.veyron.Veyron;
-import observer.observable.IphoneObservableImpl;
-import observer.observable.StockObservable;
-import observer.observer.EmailAlertObserver;
-import observer.observer.MobileAlertObserver;
-import observer.observer.NotificationAlertObserver;
-import stratergy.NormalDriveStratergy;
-import stratergy.OffRoadDriveStratergy;
-import stratergy.SportsDriveStratergy;
-import stratergy.VehcileStratergy;
-import stratergy.VehcileType.NormalVehcile;
-import stratergy.VehcileType.OffRoadVehcile;
-import stratergy.VehcileType.SportsVehcile;
+import abstractfactory.VehcileFactory;
+import stratergy.paymentservice.PaymentService;
+import stratergy.paymentservice.paymentmethod.PaymentCash;
+import stratergy.paymentservice.paymentmethod.PaymentCreditCard;
+import stratergy.paymentservice.paymentmethod.PaymentUPI;
+import stratergy.paymentservice.service.CashService;
+import stratergy.paymentservice.service.CredirCardService;
+import stratergy.paymentservice.service.UPIService;
 
 public class Main {
     public static void main(String[] args) {
@@ -53,7 +43,7 @@ public class Main {
 
         // OR we can do like this, this way we increase readability of code by making object of child classes
 
-/*        NormalVehcile normalVehcile = new NormalVehcile(new NormalDriveStratergy());
+/*        VehcileStratergy normalVehcile = new NormalVehcile(new NormalDriveStratergy());
         normalVehcile.drive();
 
         VehcileStratergy sportsVehcile = new SportsVehcile(new SportsDriveStratergy());
@@ -61,6 +51,21 @@ public class Main {
 
         VehcileStratergy offRoadVehcile = new OffRoadVehcile(new OffRoadDriveStratergy());
         offRoadVehcile.drive();*/
+
+
+/*        PaymentService cashService = new CashService(new PaymentCash());
+        cashService.pay();
+
+        PaymentService upiService = new UPIService(new PaymentUPI());
+        upiService.pay();
+
+        PaymentService creditCardService = new CredirCardService(new PaymentCreditCard());
+        creditCardService.pay();*/
+
+
+
+
+
 
 
 
@@ -104,12 +109,31 @@ public class Main {
 
         // factory and abstract factory
 
-        VeyronFactory factory = new VeyronFactory();
+  /*      VeyronFactory factory = new VeyronFactory();
         Veyron veyron = factory.getModel("MID");
         System.out.println("veyron price is " + veyron.getPrice());
 
         Veyron veyron1 = factory.getModel("HIGH");
         System.out.println("veyron price is " + veyron1.getPrice());
+*/
+
+        VehcileFactory factory = new VehcileFactory();
+        factory.setVehcile("Mercedes");
+
+        System.out.println(factory.getPrice());
+
+        factory.setVehcile("BMW");
+        System.out.println(factory.getPrice());
+
+        factory.setVehcile("Hyundai");
+        System.out.println(factory.getPrice());
+
+        factory.setVehcile("Suzuki");
+
+        System.out.println(factory.getPrice());
+
+
+
 
 
 
