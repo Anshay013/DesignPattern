@@ -1,4 +1,4 @@
-package stratergy.paymentservice;
+package parkingLot.paymentservice;
 
 public interface PaymentStratergy {
 

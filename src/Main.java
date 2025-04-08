@@ -1,11 +1,13 @@
-import abstractfactory.VehcileFactory;
-import stratergy.paymentservice.PaymentService;
-import stratergy.paymentservice.paymentmethod.PaymentCash;
-import stratergy.paymentservice.paymentmethod.PaymentCreditCard;
-import stratergy.paymentservice.paymentmethod.PaymentUPI;
-import stratergy.paymentservice.service.CashService;
-import stratergy.paymentservice.service.CredirCardService;
-import stratergy.paymentservice.service.UPIService;
+import parkingLot.EntryGate;
+import parkingLot.ExitGate;
+import parkingLot.ParkingLotService;
+import parkingLot.TwoWheelerParkingService;
+import parkingLot.manager.ParkingSpotManager;
+import parkingLot.manager.TwoWheelerStrategyManager;
+import parkingLot.model.ParkingSpot;
+import parkingLot.model.Vehicle;
+import parkingLot.parkingStrategy.ParkingSpotStrategy;
+import parkingLot.parkingStrategy.TwoWheelerSpot;
 
 public class Main {
     public static void main(String[] args) {
@@ -117,7 +119,9 @@ public class Main {
         System.out.println("veyron price is " + veyron1.getPrice());
 */
 
-        VehcileFactory factory = new VehcileFactory();
+        // abstract factory
+
+/*        VehcileFactory factory = new VehcileFactory();
         factory.setVehcile("Mercedes");
 
         System.out.println(factory.getPrice());
@@ -130,13 +134,31 @@ public class Main {
 
         factory.setVehcile("Suzuki");
 
-        System.out.println(factory.getPrice());
+        System.out.println(factory.getPrice());*/
+
+
+        // ParkingLot
+        // ParkingLotService -> ParkingSpotManager -> parkingSpotStratergy
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setVehicleType(1);
+        vehicle.setParked(false);
+        vehicle.setVehicleNo(8323);
+        vehicle.setSpot(null);
 
 
 
+        ParkingSpotStrategy spot = new TwoWheelerSpot();
 
+        // while spot ios assgined then, spot is modified
 
+        ParkingLotService twoWheelerService = new TwoWheelerParkingService(new EntryGate(new TwoWheelerStrategyManager(vehicle, spot)));
+        twoWheelerService.vehicleEntry();
 
+        twoWheelerService = new TwoWheelerParkingService(new ExitGate(new TwoWheelerStrategyManager(vehicle, spot)));
+
+        twoWheelerService.vehicleExit();
+        twoWheelerService.computeCost();
 
 
 

@@ -1,7 +1,7 @@
-package stratergy.paymentservice.service;
+package parkingLot.paymentservice.service;
 
-import stratergy.paymentservice.PaymentService;
-import stratergy.paymentservice.PaymentStratergy;
+import parkingLot.paymentservice.PaymentService;
+import parkingLot.paymentservice.PaymentStratergy;
 
 public class CashService extends PaymentService {
     public CashService(PaymentStratergy paymentStratergy) {

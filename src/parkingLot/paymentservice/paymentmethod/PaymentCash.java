@@ -1,6 +1,6 @@
-package stratergy.paymentservice.paymentmethod;
+package parkingLot.paymentservice.paymentmethod;
 
-import stratergy.paymentservice.PaymentStratergy;
+import parkingLot.paymentservice.PaymentStratergy;
 
 public class PaymentCash implements PaymentStratergy {
     @Override
