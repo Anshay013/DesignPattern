@@ -14,10 +14,10 @@ public class MobileAlertObserver implements NotificationAlertObserver{
 
     @Override
     public void update() {
-        senMail(mNo, "product in stock ");
+        sendMessage(mNo, "product in stock ");
     }
 
-    private void senMail(String mNo, String msg){
+    private void sendMessage(String mNo, String msg){
             System.out.println("send msg to: " + mNo);
 
     }
