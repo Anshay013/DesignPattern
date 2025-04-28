@@ -1,3 +1,9 @@
+import elevator.Direction;
+import elevator.ElevatorCar;
+import elevator.createService.CreateServiceFactory;
+import elevator.dispatcher.externalButton.ExternalButton;
+import elevator.service.ElevatorService;
+import elevator.service.ElevatorServiceImpl;
 import parkingLot.EntryGate;
 import parkingLot.ExitGate;
 import parkingLot.ParkingLotService;
@@ -139,7 +145,7 @@ public class Main {
 
         // ParkingLot
         // ParkingLotService -> ParkingSpotManager -> parkingSpotStratergy
-
+/*
         Vehicle vehicle = new Vehicle();
         vehicle.setVehicleType(1);
         vehicle.setParked(false);
@@ -158,7 +164,26 @@ public class Main {
         twoWheelerService = new TwoWheelerParkingService(new ExitGate(new TwoWheelerStrategyManager(vehicle, spot)));
 
         twoWheelerService.vehicleExit();
-        twoWheelerService.computeCost();
+        twoWheelerService.computeCost();*/
+
+
+
+        // Elevator System'
+        int currentFloor = 5;
+        ElevatorService service = new ElevatorServiceImpl(new CreateServiceFactory());
+        ExternalButton button = service.callElevatorService();
+
+
+        button.setCurrentFloor(currentFloor);  // my current floor
+        button.pressExternalButton(Direction.DOWN); // I want to go down
+
+
+        System.out.println();
+
+        // inside the elevator
+        ElevatorCar car = service.reachDestinationService();
+        car.clickButton(currentFloor, 10);
+
 
 
 
