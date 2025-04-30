@@ -1,19 +1,9 @@
-import elevator.Direction;
-import elevator.ElevatorCar;
-import elevator.createService.CreateServiceFactory;
-import elevator.dispatcher.externalButton.ExternalButton;
-import elevator.service.ElevatorService;
-import elevator.service.ElevatorServiceImpl;
-import parkingLot.EntryGate;
-import parkingLot.ExitGate;
-import parkingLot.ParkingLotService;
-import parkingLot.TwoWheelerParkingService;
-import parkingLot.manager.ParkingSpotManager;
-import parkingLot.manager.TwoWheelerStrategyManager;
-import parkingLot.model.ParkingSpot;
-import parkingLot.model.Vehicle;
-import parkingLot.parkingStrategy.ParkingSpotStrategy;
-import parkingLot.parkingStrategy.TwoWheelerSpot;
+import streams.MobilePhone;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -169,7 +159,7 @@ public class Main {
 
 
         // Elevator System'
-        int currentFloor = 5;
+  /*      int currentFloor = 5;
         ElevatorService service = new ElevatorServiceImpl(new CreateServiceFactory());
         ExternalButton button = service.callElevatorService();
 
@@ -182,11 +172,58 @@ public class Main {
 
         // inside the elevator
         ElevatorCar car = service.reachDestinationService();
-        car.clickButton(currentFloor, 10);
+        car.clickButton(currentFloor, 10);*/
+
+
+        BiPredicate<Integer, Integer> isSumEven = (x, y) -> (x + y) % 2 == 0;
+        System.out.println(isSumEven.test(3, 4));
+
+        BiConsumer <Boolean, Integer> letsConsume = (flag, x) -> {
+            System.out.println(x);
+            System.out.println(flag);
+        };
+
+        BiFunction<Integer, Integer, Integer> myFun = (x, y) -> x + y;
+        myFun.apply(2, 4);
+        // check how to use myFun.andThen
+
+        Function<Integer, Integer> ab = x -> x + 1;
+        // instead use a uniary operator
+
+        UnaryOperator<Integer> a = x -> x + 1; // check that Unary operator also extends a Function so
+
+        // for BiFunction simply use BinaryOperator
+
+
+        // Method reference
+
+        List<String> students = Arrays.asList("aa", "bb", "cc");
+        students.forEach(x -> System.out.println(x)); // we are doing a for loop and observe we feed x i.e students[i] sort of and print
+        // i.e we feed an argument and it returns void, it's sort of a consumer
+
+        students.forEach(System.out::println); // method reference
+
+        // constructor reference
+        List<String> names = Arrays.asList("A", "B", "C");
+
+        List<MobilePhone> phoneList = names.stream().map(x -> new MobilePhone(x)).collect(Collectors.toList());
+
+        // for this method or constructor reference will look like ->
+
+        List<MobilePhone> pl = names.stream().map(MobilePhone::new).toList();
+
+
+
+
+
+
+
 
 
 
 
 
     }
+
+
 }
