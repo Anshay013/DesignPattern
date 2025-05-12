@@ -1,5 +1,10 @@
+import command.*;
+import command.commanditem.Light;
+import command.service.LightExecuterService;
+import command.service.ServiceExecuter;
 import streams.MobilePhone;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.*;
@@ -211,6 +216,34 @@ public class Main {
         // for this method or constructor reference will look like ->
 
         List<MobilePhone> pl = names.stream().map(MobilePhone::new).toList();
+
+
+
+        // Command Design Pattern
+
+
+        Light light = new Light();
+        Command lightOnCommand = new LightOnCommand(light);
+
+        ServiceExecuter executer = new LightExecuterService(lightOnCommand);
+
+        executer.execute();
+
+        Command lightOffCommand = new LightOffCommand(light);
+        executer = new LightExecuterService(lightOffCommand);
+
+        executer.execute();
+
+        Command lightChangeCommand = new LightChangeCommand(light, Color.blue);
+
+        executer = new LightExecuterService(lightChangeCommand);
+
+        executer.execute();
+
+
+
+
+
 
 
 
