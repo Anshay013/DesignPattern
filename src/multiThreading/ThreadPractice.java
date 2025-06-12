@@ -11,7 +11,7 @@ public class ThreadPractice {
 
 
 
-        ThreadTest test = new ThreadTest();
+        ThreadTest test = new ThreadTest("Anshay 1");
          test.start(); // since test extends Thread and we have overridden run in it so we get a function .start() which
         // executes run()
 
@@ -34,6 +34,12 @@ public class ThreadPractice {
         Thread t1 = new Thread(test2);
         System.out.println(t1.getName()); // directly get name or go to the fun it executes and get its name there by CurrentThread.getName()
         t1.start();
+
+
+
+        Thread t3 = new Thread(()->{
+           test2.run();
+        });
 
 
 
