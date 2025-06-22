@@ -1,3 +1,17 @@
+import carRentalSystem.CarRentalImpl;
+import carRentalSystem.CarRentalService;
+import carRentalSystem.CarType;
+import carRentalSystem.Tripservice.TripEndService;
+import carRentalSystem.Tripservice.TripEndServiceImpl;
+import carRentalSystem.Tripservice.TripStartService;
+import carRentalSystem.Tripservice.TripStartServiceImpl;
+import carRentalSystem.VehicleInventory;
+import carRentalSystem.model.RentCar;
+import carRentalSystem.model.Trip;
+import carRentalSystem.model.User;
+import carRentalSystem.paymentservice.PaymentService;
+import carRentalSystem.paymentservice.PaymentStrategy;
+import carRentalSystem.paymentservice.UPIPayment;
 import command.*;
 import command.commanditem.Light;
 import command.service.LightExecuterService;
@@ -222,7 +236,7 @@ public class Main {
         // Command Design Pattern
 
 
-        Light light = new Light();
+    /*    Light light = new Light();
         Command lightOnCommand = new LightOnCommand(light);
 
         ServiceExecuter executer = new LightExecuterService(lightOnCommand);
@@ -239,6 +253,70 @@ public class Main {
         executer = new LightExecuterService(lightChangeCommand);
 
         executer.execute();
+
+
+
+
+
+*/
+
+
+
+        // CarRentalSystem
+
+        VehicleInventory inventory = new VehicleInventory();
+        CarRentalService service = new CarRentalImpl(inventory);
+
+        User user = service.registerUser("PAT1345890", false);
+
+
+        // register Owner
+        User owner = service.registerUser("IURO2390483", true);
+
+         // make a car or make a new fun that does it
+                RentCar car = service.registerCar(owner, new RentCar.BuildCar()
+                .setCarType(CarType.FIVE_SEATER)
+                .setIsAvailable(true)
+                .setLocation("Delhi")
+                .setNumberPlate("DL09T7421")
+                .setPerHourPrice(150)
+                .build());
+
+        // add more owners, cars and evene more thing to your liking
+        // If you want to search a particular car associated with an owner, you need to implement those funs. Use database for easiness for these things.
+
+        List<RentCar> carList =  service.fetchCarList("Delhi", CarType.FIVE_SEATER);
+
+        // any selected car from here, also user sets the time duration
+        RentCar currCar = service.SelectedCar(user, car, System.currentTimeMillis(), System.currentTimeMillis() + 5000 * 1000 * 60 * 60);
+
+        Trip trip = service.rent(currCar, user);
+
+        // start trip
+
+        TripStartService startService = new TripStartServiceImpl();
+        startService.startTrip(trip);
+
+
+        // end trip and pay
+
+        TripEndService endService = new TripEndServiceImpl();
+
+        float toPay = endService.calculateMoney(currCar);
+
+
+        PaymentStrategy paymentStrategy = new UPIPayment();
+        PaymentService paymentService = new PaymentService(paymentStrategy);
+
+        paymentService.doPayment(toPay);
+
+
+
+
+
+
+
+
 
 
 

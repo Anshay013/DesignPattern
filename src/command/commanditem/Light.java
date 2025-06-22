@@ -2,7 +2,7 @@ package command.commanditem;
 
 import java.awt.*;
 
-public class Light {
+public class  Light {
 
     private Color color;
     private boolean isOnn = false;
