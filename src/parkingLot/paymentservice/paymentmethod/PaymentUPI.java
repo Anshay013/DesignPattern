@@ -1,4 +1,12 @@
 package parkingLot.paymentservice.paymentmethod;
 
-public class PaymentUPI {
+
+import parkingLot.paymentservice.PaymentStratergy;
+
+public class PaymentUPI implements PaymentStratergy {
+
+    @Override
+    public void processPayment() {
+        System.out.println("payment processed via UPI");
+    }
 }

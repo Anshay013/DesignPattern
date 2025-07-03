@@ -16,6 +16,7 @@ import command.*;
 import command.commanditem.Light;
 import command.service.LightExecuterService;
 import command.service.ServiceExecuter;
+import multiThreading.ThreadPractice;
 import streams.MobilePhone;
 
 import java.awt.*;
@@ -264,7 +265,7 @@ public class Main {
 
         // CarRentalSystem
 
-        VehicleInventory inventory = new VehicleInventory();
+     /*   VehicleInventory inventory = new VehicleInventory();
         CarRentalService service = new CarRentalImpl(inventory);
 
         User user = service.registerUser("PAT1345890", false);
@@ -309,6 +310,12 @@ public class Main {
         PaymentService paymentService = new PaymentService(paymentStrategy);
 
         paymentService.doPayment(toPay);
+*/
+
+
+        ThreadPractice practice = new ThreadPractice();
+        practice.practice();
+
 
 
 
