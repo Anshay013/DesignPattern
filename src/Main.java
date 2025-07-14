@@ -313,8 +313,12 @@ public class Main {
 */
 
 
+/*
         ThreadPractice practice = new ThreadPractice();
         practice.practice();
+*/
+
+
 
 
 
