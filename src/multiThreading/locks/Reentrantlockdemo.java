@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Lockdemo {
+public class Reentrantlockdemo {
 
     int totAmount = 2000;
 
@@ -76,34 +76,81 @@ public class Lockdemo {
             // otherwise the lock will be forever. We put 100sec here to
 
 
-                if(lock.tryLock(100000, TimeUnit.MILLISECONDS)) {
+                if(lock.tryLock(4000, TimeUnit.MILLISECONDS)) {
+                    try {
+                        Thread.sleep(3000);
 
-                System.out.println("Update amount to " + (totAmount - amount));
-                totAmount -= amount;
+
+                        System.out.println(Thread.currentThread().getName() + " Update amount to " + (totAmount - amount));
+                        totAmount -= amount;
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                         // here just printing out the exception say when the thread was interrupted isn't enough.
+                        //  We do lose the info. that the thread was interrupted probably without finishing the task.
+
+                        // now we want to restore the state from where the thread was interrupted - (Good practice)
+                        // .interrupt called by the currentThread will restore back its state, then after it help us to perform other ops.
+
+                        // Above is very confusing read below -
+
+                        // In simple words when Interrupted exp for thread is caught in catch block JVM clears the interrupt flag of thread.
+                        // Now we wanted to print something or monitor something (call some service) when the thread was interrupted. But the
+                        // flag is cleared so according to JVM no interruption occurred. Hence, the thread itself interrupts itself to get back
+                        // that interrupt state
+
+                        Thread.currentThread().interrupt();
+                    }
+                    finally {
+
+                        System.out.println(Thread.currentThread().getName() + " transaction over continue");
+                        System.out.println(Thread.currentThread().getName() + " unblocking thread");
+                        lock.unlock(); // lock will always be released by  the same thread which has aquired it (else exception will be thrown)
+                        // so always unlock the lock inside the condition of lock aquired -> if : lock.tryLock() -> unlock
+                    }
             }
             else{
-                System.out.println("prior transaction in progress try again in sometime");
+                System.out.println(Thread.currentThread().getName() + " prior transaction in progress try again in sometime");
+            }
+            if(Thread.currentThread().isInterrupted()){
+                System.out.println(Thread.currentThread().getName() + " thread was interrupted");
             }
 
+
         }
-        catch (Exception  e) {
+        catch (Exception  e) { // will be caught, if thread is interrupted while in sleep, given finally will executed after this
+            // and lock will be released
             System.out.println(e.getMessage());
+            Thread.currentThread().interrupt();
         }
-        finally {
-            // Even after 100 sec lock wont be unlocked it needs to be explicitly be unlocked
-            lock.unlock();
-        }
+
     }
+
+    /*
+      When happens to the thread when it is interrupted and when does it get normal ?
+
+      When thread is sleep ->
+
+      When thread is interrupted it goes to catch block. -> As soon as we handle the
+      interrupted exception the thread is ready to fun. When ever a thread is interrupted an exception can be caught
+      in the block.
+
+      Executing or ideal not in sleep mode ->
+      Interrupts in Java are a cooperative mechanism. They are a way for one thread to politely ask another to stop.
+      If the interrupted thread doesn’t cooperate, nothing forces it to stop. say main thread calls t1.interrupt().
+      t1 can check Thread.currentThread().isInterrupted() if yes its on t1 to stop or ignore it.
+
+    * */
 
 
     public static void main(String[] args) {
-        Lockdemo demo = new Lockdemo();
+        Reentrantlockdemo demo = new Reentrantlockdemo();
 
         // instead of creating class directly call runnable and implement run
         Runnable task = new Runnable() {
             @Override
             public void run() {
-                demo.withdraw(1000);
+                demo.withdraw(100);
             }
         };
 
@@ -113,6 +160,13 @@ public class Lockdemo {
         Thread t2 = new Thread(task, "Thread2");
         t1.start();
         t2.start();
+        try {
+            t1.join();
+            t2.join();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
 
 
