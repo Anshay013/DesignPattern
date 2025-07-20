@@ -94,7 +94,7 @@ public class Reentrantlockdemo {
 
                         // Above is very confusing read below -
 
-                        // In simple words when Interrupted exp for thread is caught in catch block JVM clears the interrupt flag of thread.
+                        // In simple words when Interrupted exception for thread is caught in catch block JVM clears the interrupt flag of thread.
                         // Now we wanted to print something or monitor something (call some service) when the thread was interrupted. But the
                         // flag is cleared so according to JVM no interruption occurred. Hence, the thread itself interrupts itself to get back
                         // that interrupt state
