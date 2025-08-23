@@ -1,8 +1,6 @@
 package parkinglotnew.gate;
 
-import parkingLot.EntryGate;
 import parkinglotnew.Floor;
-import parkinglotnew.VehicleType;
 import parkinglotnew.model.Parking;
 import parkinglotnew.model.Vehicle;
 
