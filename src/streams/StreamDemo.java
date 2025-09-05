@@ -1,11 +1,11 @@
 package streams;
 
 import com.sun.jdi.event.StepEvent;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class StreamDemo {
@@ -178,6 +178,115 @@ public class StreamDemo {
 
 
 
+
+
+
+        int target = 4;
+
+        ArrayList<Integer>nums = new ArrayList<>(Arrays.asList(0 ,1, 2, 3, 4, 5));
+        // two sum
+        List<List<Integer>>ans = IntStream.range(0, nums.size())     // --> This produces i from 0 to nums.size()-1
+                .boxed()
+                .flatMap(i ->                    // --> For each i, do the inner stream
+                        IntStream.range(i + 1, nums.size())  // --> For each j > i
+                                .filter(j -> nums.get(i) + nums.get(j) == target)
+                                .mapToObj(j -> Arrays.asList(nums.get(i), nums.get(j)))
+                )
+                .toList();
+
+
+
+
+        List<List<Integer>>res = IntStream.range(0, nums.size())
+                .boxed()
+                .flatMap(i ->
+                        IntStream.range(i + 1, nums.size())
+                                .boxed()
+                                .flatMap(j ->
+                                        IntStream.range(j + 1, nums.size())
+                                                .filter(k -> nums.get(i) + nums.get(j) + nums.get(k) == target)
+                                                .mapToObj(k -> Arrays.asList(nums.get(i), nums.get(j), nums.get(k)))
+                                )
+                ).toList();
+
+
+        // Second Highest Number
+
+        Optional<Integer> value = nums.stream()
+                .sorted(Collections.reverseOrder()) // sort in reverse order
+                .limit(2) // get first  two digit in a list
+                .findFirst(); // get the first no which is 2nd highest
+
+        // value.get()
+
+        // Longest String in a List
+
+        ArrayList<String> snums = new ArrayList<>(Arrays.asList("apple", "bat", "banana", "dog", "cat", "zebra"));
+
+        Optional<String>myString = snums.stream()
+                .sorted(
+                        Comparator.comparingInt(String::length).reversed()
+                                .thenComparing(Comparator.naturalOrder())
+                )
+                .limit(1).findFirst();
+
+
+        Optional<String>myStr = snums.stream()
+                .sorted((a, b) ->{
+                    // observe java is opposite of cpp
+                    if(a.length() > b.length()) return -1; // longer first considirng a is longer
+                    else if(a.length() < b.length()) return 1;
+                    else{
+                        b.compareTo(a); // comapre a and b such the lexicographically greater comes first. for smaller a.compareTo(b)
+                    }
+                    return 0;
+                })
+                .limit(1).findFirst();
+
+
+        System.out.println(myStr.get());
+
+
+
+
+
+        // return names of all employee having salary  Above Average Salary.
+
+        ArrayList<Employee> employees = new ArrayList<>(Arrays.asList(
+                new Employee("dsdsd", 2323),
+                new Employee("sfasf", 24234),
+                new Employee("asfasf", 423555),
+                new Employee("dgssedeg", 9999)));
+
+
+        // append more into the list
+
+        Double average = employees.stream().mapToDouble(e -> e.salary).average().orElse(0.0);
+
+        List<String> employeeList = employees.stream()
+                .filter(e -> e.salary >= average)
+                .map(e -> e.name)
+                .collect(Collectors.toList());
+
+        // Common Elements in Two Lists
+
+
+        ArrayList<Integer>nums1 = new ArrayList<>(Arrays.asList(0 ,1, 4, 5));
+
+        List<Integer> common = nums.stream().
+                filter(x -> nums1.contains(x)).
+                collect(Collectors.toList());
+
+        // we dont want to use find
+
+        IntStream.range(0, nums.size())
+                .boxed()
+                .flatMap(i -> // note i and j are indexes
+                        IntStream.range(0, nums1.size()).
+                        filter(j -> nums.get(i).equals(nums1.get(j)))
+                                .mapToObj(j -> nums.get(i))
+
+                   ).collect(Collectors.toList());
 
 
 
