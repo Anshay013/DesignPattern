@@ -1,6 +1,6 @@
-package command.service;
+package command__correct_check__housemanagement.service;
 
-import command.Command;
+import command__correct_check__housemanagement.Command;
 
 public class LightExecuterService extends ServiceExecuter {
 

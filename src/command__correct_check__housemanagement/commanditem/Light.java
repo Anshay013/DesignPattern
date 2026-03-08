@@ -1,4 +1,4 @@
-package command.commanditem;
+package command__correct_check__housemanagement.commanditem;
 
 import java.awt.*;
 
@@ -26,6 +26,11 @@ public class  Light {
             System.out.println("Light already off");
         }
 
+    }
+
+    public void toggleLight(){
+        System.out.println("Toggle light to " + isOnn);
+        isOnn = !isOnn;
     }
 
     public void changeColor(Color color){

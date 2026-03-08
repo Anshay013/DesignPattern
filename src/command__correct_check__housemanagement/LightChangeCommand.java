@@ -1,6 +1,6 @@
-package command;
+package command__correct_check__housemanagement;
 
-import command.commanditem.Light;
+import command__correct_check__housemanagement.commanditem.Light;
 
 import java.awt.*;
 
