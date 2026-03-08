@@ -54,7 +54,7 @@ public class GroupManager extends SplitWiseService{
     }
 
 
-    private void reconcileBalances(User userA, User userB) {
+    private void    reconcileBalances(User userA, User userB) {
         // 1. Fetch current unidirectional debts
         double aOwesB = userA.getOwes().getOrDefault(userB, 0.0);
         double bOwesA = userB.getOwes().getOrDefault(userA, 0.0);

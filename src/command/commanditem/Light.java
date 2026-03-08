@@ -28,6 +28,11 @@ public class  Light {
 
     }
 
+    public void toggleLight(){
+        System.out.println("Toggle light to " + isOnn);
+        isOnn = !isOnn;
+    }
+
     public void changeColor(Color color){
         System.out.println("Set tht light color to " + color.toString());
         this.color = color;
