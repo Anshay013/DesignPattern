@@ -1,6 +1,6 @@
 package housemanagement.manager;
 
-import command.commanditem.Light;
+import command__correct_check__housemanagement.commanditem.Light;
 
 public class AccessibilityManager extends WorkManager{
 

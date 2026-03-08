@@ -1,25 +1,5 @@
-import carRentalSystem.CarRentalImpl;
-import carRentalSystem.CarRentalService;
-import carRentalSystem.CarType;
-import carRentalSystem.Tripservice.TripEndService;
-import carRentalSystem.Tripservice.TripEndServiceImpl;
-import carRentalSystem.Tripservice.TripStartService;
-import carRentalSystem.Tripservice.TripStartServiceImpl;
-import carRentalSystem.VehicleInventory;
-import carRentalSystem.model.RentCar;
-import carRentalSystem.model.Trip;
-import carRentalSystem.model.User;
-import carRentalSystem.paymentservice.PaymentService;
-import carRentalSystem.paymentservice.PaymentStrategy;
-import carRentalSystem.paymentservice.UPIPayment;
-import command.*;
-import command.commanditem.Light;
-import command.service.LightExecuterService;
-import command.service.ServiceExecuter;
-import multiThreading.ThreadPractice;
 import streams.MobilePhone;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.*;

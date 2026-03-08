@@ -1,6 +1,6 @@
 package housemanagement;
 
-import command.commanditem.Light;
+import command__correct_check__housemanagement.commanditem.Light;
 import housemanagement.commands.AccessibilityCommand;
 import housemanagement.commands.CleanCommand;
 import housemanagement.commands.Command;
