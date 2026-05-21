@@ -1,0 +1,4 @@
+package kotlinpractice
+
+class kotprac {
+}
