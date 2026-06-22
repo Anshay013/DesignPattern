@@ -1,5 +1,6 @@
 package splitwise;
 
+import kotlin.Pair;
 import splitwise.model.Expense;
 import splitwise.model.Group;
 import splitwise.model.User;
@@ -25,9 +26,7 @@ public abstract class SplitWiseService {
 
 
     // A button toggle
-    public void simplifyGroupDebts(Group group) {
-
-    }
+    public abstract List<List<String>> simplifyGroupDebts(Group group);
 
 
 

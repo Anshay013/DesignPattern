@@ -20,9 +20,9 @@ public class SynchronizedHandoff {
                 System.out.println("Alice: Got the lock back! Driving away. VROOM!");
 
 
-                //            // SAY waiting is too long alice needs to proceed (t1 thread has starved waiting for signal()) then what ?? -
+//                            // SAY waiting is too long alice needs to proceed (t1 thread has starved waiting for signal()) then what ?? -
 //            Alice will wait for Bob's signal, BUT she will give up after 5 seconds.
-                //               keyA.wait(5000);
+//                               keyA.wait(5000);
 
 
             } catch (InterruptedException e) {

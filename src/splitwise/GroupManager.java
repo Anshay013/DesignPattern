@@ -1,11 +1,12 @@
 package splitwise;
 
+import kotlin.Pair;
 import splitwise.model.Expense;
 import splitwise.model.Group;
 import splitwise.model.User;
 import splitwise.model.service.MoneySplitService;
 
-import java.util.List;
+import java.util.*;
 
 public class GroupManager extends SplitWiseService{
 
@@ -99,5 +100,75 @@ public class GroupManager extends SplitWiseService{
         user.setTotOwes(user.getOwes().values().stream().mapToDouble(Double::doubleValue).sum());
         user.setTotLends(user.getLends().values().stream().mapToDouble(Double::doubleValue).sum());
     }
+    @Override
+    public List<List<String>> simplifyGroupDebts(Group group) {
+        System.out.println("SplitWiseService simplifyGroupDebts");
+
+        List<List<String>> expenseChart = new ArrayList<>();
+
+        List<User>candidates = group.getUserList();
+
+        // form Heaps.
+
+        TreeMap<Double, List<String>>ownsHeap = new TreeMap<>();
+        TreeMap<Double, List<String>>lendsHeap = new TreeMap<>();
+
+        for (User user : candidates) {
+//            HashMap<User, Double>lendsMap = user.getLends();
+//            HashMap<User, Double>ownsMap = user.getOwes();
+//
+//            Double totLend = 0.00;
+//            for(Map.Entry<User, Double> entry : lendsMap.entrySet()) totLend += entry.getValue();
+//            Double totOwe = 0.00;
+//            for(Double value : ownsMap.values()) totOwe += value;
+
+          //  ownsMap.values().stream().mapToDouble(x -> x).sum();
+
+            Double debt =  user.getTotOwes() - user.getTotLends();
+           if(debt < 0) {
+               lendsHeap.computeIfAbsent(debt, k -> new ArrayList<>()).add(user.getUserId());
+           }
+           else if(debt > 0) ownsHeap.computeIfAbsent(debt, k -> new ArrayList<>()).add(user.getUserId());
+      }
+        // heap is formed
+
+        // heapify
+        while(!ownsHeap.isEmpty() && !lendsHeap.isEmpty()) {
+            Map.Entry<Double, List<String>> ownsEntry = ownsHeap.pollLastEntry();
+            Map.Entry<Double, List<String>> lendsEntry = lendsHeap.pollFirstEntry();
+
+             Double ownsValue = ownsEntry.getKey(); //  max
+             Double lendsValue = lendsEntry.getKey();   // min
+
+             List<String> ownsIds = ownsEntry.getValue();
+             List<String> lendsIds = lendsEntry.getValue();
+
+                 String ouid = ownsIds.getLast();
+                 String luid = lendsIds.getLast();
+
+
+                 lendsIds.removeLast();
+                 ownsIds.removeLast();
+                 Double val = ownsValue + lendsValue;
+
+
+                  if(ownsValue  > lendsValue * -1.00) {
+                     ownsHeap.computeIfAbsent(val, k -> new ArrayList<>()).add(ouid);
+                 }
+
+                 else if(ownsValue  < lendsValue * -1.00){
+                     lendsHeap.computeIfAbsent(val, k -> new ArrayList<>()).add(luid);
+                 }
+
+            expenseChart.add(new ArrayList<>(Arrays.asList(luid, ouid, val.toString())));
+
+            if(ownsIds.isEmpty()) ownsHeap.remove(ownsValue);
+            if(lendsIds.isEmpty()) lendsHeap.remove(lendsValue);
+
+             }
+
+            return expenseChart;
+
+        }
 
 }

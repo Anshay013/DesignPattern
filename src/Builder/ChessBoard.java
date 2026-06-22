@@ -1,6 +1,6 @@
 package Builder;
 
-import org.jetbrains.annotations.NotNull;
+
 
 public class ChessBoard {
 
@@ -8,7 +8,7 @@ public class ChessBoard {
     private final int moveQueen;
     private final int moveBishop;
 
-    private ChessBoard(@NotNull Builder builder) {
+    private ChessBoard(Builder builder) {
         this.moveRook = builder.moveRook;
         this.moveQueen = builder.moveQueen;
         this.moveBishop = builder.moveBishop;
